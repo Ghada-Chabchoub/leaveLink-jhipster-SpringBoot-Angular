@@ -1,0 +1,50 @@
+application {
+  config {
+    baseName leaveMang
+    applicationType monolith
+    packageName com.leave.mang
+    authenticationType jwt
+    prodDatabaseType mysql
+    devDatabaseType h2Disk
+    buildTool maven
+  }
+  entities  LeaveRequest
+}
+
+entity LeaveRequest {
+    title String required,
+    description String,
+    fromDate LocalDate required,
+    toDate LocalDate required,
+    status LeaveStatus required,
+    department Department required,
+    changedAt Instant required
+
+
+}
+
+
+enum LeaveStatus {
+  REQUESTED,
+  REJECTED,
+  APPROVED
+}
+
+
+enum Department {
+  IT,
+  RH,
+  FINANCE,
+  MARKETING,
+  SALES
+}
+relationship ManyToOne {
+  LeaveRequest{employee(login)} to User with builtInEntity
+}
+
+
+service LeaveRequest with serviceClass
+
+paginate LeaveRequest with pagination
+
+dto * with mapstruct
