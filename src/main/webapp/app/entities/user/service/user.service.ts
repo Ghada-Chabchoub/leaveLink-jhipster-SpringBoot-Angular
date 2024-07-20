@@ -6,7 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IUser } from '../user.model';
-
+import { User } from 'app/admin/user-management/user-management.model';
 export type EntityResponseType = HttpResponse<IUser>;
 export type EntityArrayResponseType = HttpResponse<IUser[]>;
 
@@ -52,5 +52,9 @@ export class UserService {
       return [...usersToAdd, ...userCollection];
     }
     return userCollection;
+  }
+
+  findByLogin(login: string): Observable<EntityResponseType> {
+    return this.http.get<IUser>(`/api/admin/users/${login}`, { observe: 'response' });
   }
 }

@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IAuthority, NewAuthority } from '../authority.model';
+import { IUser } from 'app/entities/user/user.model';
 
 export type EntityResponseType = HttpResponse<IAuthority>;
 export type EntityArrayResponseType = HttpResponse<IAuthority[]>;
