@@ -276,12 +276,17 @@
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>postgresql</artifactId>
+            <artifactId>mysql</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -806,8 +811,8 @@
                 <profile.test>testdev</profile.test>
                 <liquibase-plugin.hibernate-dialect>org.hibernate.dialect.H2Dialect</liquibase-plugin.hibernate-dialect>
                 <liquibase-plugin.driver>org.h2.Driver</liquibase-plugin.driver>
-                <liquibase-plugin.url>jdbc:h2:file:${project.build.directory}/h2db/db/leaveLink</liquibase-plugin.url>
-                <liquibase-plugin.username>leaveLink</liquibase-plugin.username>
+                <liquibase-plugin.url>jdbc:h2:file:${project.build.directory}/h2db/db/LeaveLink</liquibase-plugin.url>
+                <liquibase-plugin.username>LeaveLink</liquibase-plugin.username>
                 <liquibase-plugin.password/>
             </properties>
             <dependencies>
@@ -828,7 +833,7 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <configuration>
                             <testExcludes>
-                                <testExclude>com/leave/link/config/PostgreSqlTestContainer.java</testExclude>
+                                <testExclude>com/leave/link/config/MysqlTestContainer.java</testExclude>
                             </testExcludes>
                         </configuration>
                     </plugin>
@@ -956,10 +961,10 @@
                 <!-- default Spring profiles -->
                 <spring.profiles.active>prod${profile.api-docs}${profile.tls}${profile.e2e}${profile.no-liquibase}</spring.profiles.active>
                 <profile.test>testprod</profile.test>
-                <liquibase-plugin.hibernate-dialect>org.hibernate.dialect.PostgreSQLDialect</liquibase-plugin.hibernate-dialect>
-                <liquibase-plugin.driver>org.postgresql.Driver</liquibase-plugin.driver>
-                <liquibase-plugin.url>jdbc:postgresql://localhost:5432/leaveLink</liquibase-plugin.url>
-                <liquibase-plugin.username>leaveLink</liquibase-plugin.username>
+                <liquibase-plugin.hibernate-dialect>org.hibernate.dialect.MySQL8Dialect</liquibase-plugin.hibernate-dialect>
+                <liquibase-plugin.driver>com.mysql.cj.jdbc.Driver</liquibase-plugin.driver>
+                <liquibase-plugin.url>jdbc:mysql://localhost:3306/LeaveLink</liquibase-plugin.url>
+                <liquibase-plugin.username>root</liquibase-plugin.username>
                 <liquibase-plugin.password/>
             </properties>
             <build>
@@ -1037,8 +1042,8 @@
             </build>
             <dependencies>
                 <dependency>
-                    <groupId>org.postgresql</groupId>
-                    <artifactId>postgresql</artifactId>
+                    <groupId>com.mysql</groupId>
+                    <artifactId>mysql-connector-j</artifactId>
                 </dependency>
             </dependencies>
         </profile>

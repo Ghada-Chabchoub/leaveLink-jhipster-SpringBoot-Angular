@@ -1,2 +1,3 @@
 org.springframework.test.context.ContextCustomizerFactory = com.leave.link.\
+    config.SqlTestContainersSpringContextCustomizerFactory,com.leave.mang.\
     config.SqlTestContainersSpringContextCustomizerFactory

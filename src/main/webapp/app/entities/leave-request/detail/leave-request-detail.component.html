@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (leaveRequest()) {
+      <div>
+        <h2 data-cy="leaveRequestDetailsHeading"><span jhiTranslate="leaveLinkApp.leaveRequest.detail.title">Leave Request</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ leaveRequest()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="leaveLinkApp.leaveRequest.title">Title</span></dt>
+          <dd>
+            <span>{{ leaveRequest()!.title }}</span>
+          </dd>
+          <dt><span jhiTranslate="leaveLinkApp.leaveRequest.description">Description</span></dt>
+          <dd>
+            <span>{{ leaveRequest()!.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="leaveLinkApp.leaveRequest.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ leaveRequest()!.fromDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="leaveLinkApp.leaveRequest.toDate">To Date</span></dt>
+          <dd>
+            <span>{{ leaveRequest()!.toDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="leaveLinkApp.leaveRequest.status">Status</span></dt>
+          <dd>
+            <span [jhiTranslate]="'leaveLinkApp.LeaveStatus.' + (leaveRequest()!.status ?? 'null')">{{
+              { null: '', REQUESTED: 'REQUESTED', REJECTED: 'REJECTED', APPROVED: 'APPROVED' }[leaveRequest()!.status ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="leaveLinkApp.leaveRequest.department">Department</span></dt>
+          <dd>
+            <span [jhiTranslate]="'leaveLinkApp.Department.' + (leaveRequest()!.department ?? 'null')">{{
+              { null: '', IT: 'IT', RH: 'RH', FINANCE: 'FINANCE', MARKETING: 'MARKETING', SALES: 'SALES' }[
+                leaveRequest()!.department ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="leaveLinkApp.leaveRequest.changedAt">Changed At</span></dt>
+          <dd>
+            <span>{{ leaveRequest()!.changedAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="leaveLinkApp.leaveRequest.employee">Employee</span></dt>
+          <dd>
+            <span>{{ leaveRequest()!.employee?.login }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/leave-request', leaveRequest()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

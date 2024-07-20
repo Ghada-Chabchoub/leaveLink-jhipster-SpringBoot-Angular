@@ -1,8 +1,8 @@
 application {
   config {
-    baseName leaveMang
+    baseName leaveLink
     applicationType monolith
-    packageName com.leave.mang
+    packageName com.leave.link
     authenticationType jwt
     prodDatabaseType mysql
     devDatabaseType h2Disk

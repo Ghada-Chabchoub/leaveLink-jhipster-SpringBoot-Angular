@@ -1,0 +1,12 @@
+{
+  "leaveLinkApp": {
+    "Department": {
+      "null": "",
+      "IT": "IT",
+      "RH": "RH",
+      "FINANCE": "FINANCE",
+      "MARKETING": "MARKETING",
+      "SALES": "SALES"
+    }
+  }
+}

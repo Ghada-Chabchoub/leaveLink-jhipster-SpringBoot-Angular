@@ -32,8 +32,8 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:file:./target/h2db/db/leaveLink;DB_CLOSE_DELAY=-1
-    username: leaveLink
+    url: jdbc:h2:file:./target/h2db/db/LeaveLink;DB_CLOSE_DELAY=-1;MODE=MYSQL
+    username: LeaveLink
     password:
     hikari:
       poolName: Hikari
@@ -44,7 +44,7 @@ spring:
       enabled: false
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
-    contexts: dev, faker
+    contexts: dev
   mail:
     host: localhost
     port: 25

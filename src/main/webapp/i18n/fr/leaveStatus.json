@@ -1,0 +1,10 @@
+{
+  "leaveLinkApp": {
+    "LeaveStatus": {
+      "null": "",
+      "REQUESTED": "REQUESTED",
+      "REJECTED": "REJECTED",
+      "APPROVED": "APPROVED"
+    }
+  }
+}
