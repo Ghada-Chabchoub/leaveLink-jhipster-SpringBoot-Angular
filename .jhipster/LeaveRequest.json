@@ -1,0 +1,59 @@
+{
+  "annotations": {
+    "changelogDate": "20240719215148"
+  },
+  "applications": ["LeaveLink"],
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fromDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "toDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "LeaveStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "REQUESTED,REJECTED,APPROVED"
+    },
+    {
+      "fieldName": "department",
+      "fieldType": "Department",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "IT,RH,FINANCE,MARKETING,SALES"
+    },
+    {
+      "fieldName": "changedAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "LeaveRequest",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "employee",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}
