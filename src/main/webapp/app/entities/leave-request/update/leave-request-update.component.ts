@@ -15,6 +15,7 @@ import { LeaveRequestService } from '../service/leave-request.service';
 import { ILeaveRequest } from '../leave-request.model';
 import { LeaveRequestFormService, LeaveRequestFormGroup } from './leave-request-form.service';
 import { AccountService } from 'app/core/auth/account.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   standalone: true,
@@ -29,6 +30,9 @@ export class LeaveRequestUpdateComponent implements OnInit {
   departmentValues = Object.keys(Department);
   isAdmin: boolean = false;
   usersSharedCollection: IUser[] = [];
+  currentUser: IUser | null = null;
+
+  form: FormGroup;
 
   protected leaveRequestService = inject(LeaveRequestService);
   protected leaveRequestFormService = inject(LeaveRequestFormService);
@@ -39,17 +43,36 @@ export class LeaveRequestUpdateComponent implements OnInit {
   editForm: LeaveRequestFormGroup = this.leaveRequestFormService.createLeaveRequestFormGroup();
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
+  constructor(private fb: FormBuilder) {
+    this.form = this.fb.group({
+      employee: [{ value: this.currentUser?.login, disabled: true }],
+    });
+  }
 
   ngOnInit(): void {
-    console.log('heeloo');
-
     this.isAdmin = this.accountService.hasAnyAuthority('ROLE_ADMIN');
+    console.log('Is Admin:', this.isAdmin); // Add this line
     this.activatedRoute.data.subscribe(({ leaveRequest }) => {
       this.leaveRequest = leaveRequest;
       if (leaveRequest) {
         this.updateForm(leaveRequest);
       }
       this.loadRelationshipsOptions();
+    });
+
+    this.accountService.identity().subscribe(account => {
+      if (account) {
+        this.userService.findByLogin(account.login).subscribe(userResponse => {
+          this.currentUser = userResponse.body;
+          console.log(this.currentUser); // Add this line to debug
+          if (this.currentUser) {
+            this.form.get('employee')?.setValue(this.currentUser.login);
+            this.form.get('employee')?.disable(); // Disable the employee field
+          } else {
+            console.error('Current user is null or undefined');
+          }
+        });
+      }
     });
   }
 

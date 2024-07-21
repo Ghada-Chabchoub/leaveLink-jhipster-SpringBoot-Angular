@@ -161,18 +161,8 @@
 
         <div class="mb-3">
           <label class="form-label" for="field_employee" jhiTranslate="leaveLinkApp.leaveRequest.employee">Employee</label>
-          <select
-            class="form-control"
-            id="field_employee"
-            data-cy="employee"
-            name="employee"
-            formControlName="employee"
-            [compareWith]="compareUser"
-          >
-            <option [ngValue]="null"></option>
-            @for (userOption of usersSharedCollection; track $index) {
-              <option [ngValue]="userOption">{{ userOption.login }}</option>
-            }
+          <select class="form-control" id="field_employee" data-cy="employee" name="employee" formControlName="employee" [disabled]="true">
+            <option [ngValue]="currentUser">{{ currentUser?.login }}</option>
           </select>
         </div>
       </div>

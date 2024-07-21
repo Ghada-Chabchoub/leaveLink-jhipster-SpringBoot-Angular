@@ -146,21 +146,7 @@ public class LeaveRequestResource {
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of leaveRequests in body.
      */
-    /*@GetMapping("")
-    public ResponseEntity<List<LeaveRequestDTO>> getAllLeaveRequests(
-        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
-        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
-    ) {
-        log.debug("REST request to get a page of LeaveRequests");
-        Page<LeaveRequestDTO> page;
-        if (eagerload) {
-            page = leaveRequestService.findAllWithEagerRelationships(pageable);
-        } else {
-            page = leaveRequestService.findAll(pageable);
-        }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }*/
+
     @GetMapping("")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<List<LeaveRequestDTO>> getAllLeaveRequests(

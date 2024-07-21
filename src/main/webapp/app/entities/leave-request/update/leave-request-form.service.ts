@@ -6,6 +6,7 @@ import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { ILeaveRequest, NewLeaveRequest } from '../leave-request.model';
 import { AccountService } from '../../../core/auth/account.service';
 import { HttpClient } from '@angular/common/http';
+import { IUser } from 'app/entities/user/user.model';
 
 /**
  * A partial Type with required key is used as form input.
@@ -52,7 +53,7 @@ export class LeaveRequestFormService {
     private accountService: AccountService,
   ) {}
 
-  createLeaveRequestFormGroup(leaveRequest: LeaveRequestFormGroupInput = { id: null }): LeaveRequestFormGroup {
+  createLeaveRequestFormGroup(leaveRequest: LeaveRequestFormGroupInput = { id: null }, currentUser?: IUser): LeaveRequestFormGroup {
     const leaveRequestRawValue = this.convertLeaveRequestToLeaveRequestRawValue({
       ...this.getFormDefaults(),
       ...leaveRequest,
@@ -89,7 +90,9 @@ export class LeaveRequestFormService {
       changedAt: new FormControl(leaveRequestRawValue.changedAt, {
         validators: [Validators.required],
       }),
-      employee: new FormControl(leaveRequestRawValue.employee),
+      employee: new FormControl(leaveRequestRawValue.employee, {
+        validators: [Validators.required],
+      }),
     });
   }
 
