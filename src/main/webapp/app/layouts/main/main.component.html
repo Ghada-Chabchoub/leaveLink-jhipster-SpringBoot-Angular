@@ -1,13 +1,42 @@
-<jhi-page-ribbon></jhi-page-ribbon>
-
-<div>
-  <router-outlet name="navbar"></router-outlet>
-</div>
-
-<div class="container-fluid">
-  <div class="card jh-card">
-    <router-outlet></router-outlet>
+<!-- app.component.html -->
+<div class="app-container">
+  <jhi-navbar></jhi-navbar>
+  <div class="main-content">
+    <!-- <div class="sidebar" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+      <ul>
+        
+            <li>
+              <a class="dropdown-item" 
+                 routerLink="/admin/user-management" 
+                 routerLinkActive="active" 
+                 [routerLinkActiveOptions]="{ exact: true }"
+                 (click)="collapseNavbar()">
+                <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.admin.userManagement">User management</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/leave-request"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.leaveRequest">Leave Request</span>
+              </a>
+            </li>
+          
+            
+           
+          </ul>
+        
+      
+    </div> -->
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
   </div>
-
   <jhi-footer></jhi-footer>
 </div>

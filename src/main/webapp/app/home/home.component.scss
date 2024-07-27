@@ -21,3 +21,10 @@ Main page styles
     background-size: contain;
   }
 }
+.alert {
+  transition: opacity 0.3s ease-out;
+}
+
+.alert.hidden {
+  opacity: 0;
+}

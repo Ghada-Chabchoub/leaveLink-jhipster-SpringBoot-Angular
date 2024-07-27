@@ -245,7 +245,7 @@
       </div>
 
       <form *ngIf="!success()" name="form" (ngSubmit)="register()" [formGroup]="registerForm">
-        <div class="mb-3">
+        <div class="mt-3">
           <label class="form-label" for="login" jhiTranslate="global.form.username.label">Username</label>
           <input
             type="text"
@@ -290,7 +290,7 @@
           </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mt-3">
           <label class="form-label" for="email" jhiTranslate="global.form.email.label">Email</label>
           <input
             type="email"
@@ -334,7 +334,7 @@
           </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mt-3">
           <label class="form-label" for="password" jhiTranslate="global.form.newpassword.label">New password</label>
           <input
             type="password"
@@ -375,7 +375,7 @@
           <jhi-password-strength-bar [passwordToCheck]="registerForm.get('password')!.value"></jhi-password-strength-bar>
         </div>
 
-        <div class="mb-3">
+        <div class="mt-3">
           <label class="form-label" for="confirmPassword" jhiTranslate="global.form.confirmpassword.label">New password confirmation</label>
           <input
             type="password"
