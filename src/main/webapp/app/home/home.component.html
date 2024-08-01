@@ -1,16 +1,20 @@
 <div>
   @if (account() !== null) {
-    <!--  <div class="alert alert-success" *ngIf="showLoginMessage">
-          @if (account()) {
-            <span id="home-logged-message" jhiTranslate="home.logged.message" [translateValues]="{ username: account()!.login }">
-              You are logged in as &quot;{{ account()!.login }}&quot;.
-            </span>
-          }
-        </div>   -->
+    <div class="alert alert-success" *ngIf="showLoginMessage">
+      @if (account()) {
+        <span id="home-logged-message" jhiTranslate="home.logged.message" [translateValues]="{ username: account()!.login }">
+          You are logged in as &quot;{{ account()!.login }}&quot;.
+        </span>
+      }
+    </div>
     <ng-container *jhiHasAnyAuthority="'ROLE_ADMIN'">
-      <h2 id="home-admin-message">Welcome to the admin panel</h2>
-      <!-- Add any admin-specific content here -->
+      <div class="welcome-text">
+        Welcome To The
+        <span class="welcome-span">Admin Panel </span>
+      </div>
+      <jhi-leave-request></jhi-leave-request>
     </ng-container>
+
     <ng-container *jhiHasAnyAuthority="'ROLE_USER'">
       <jhi-leave-request></jhi-leave-request>
     </ng-container>

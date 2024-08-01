@@ -1,31 +1,40 @@
 <div class="d-flex justify-content-center">
-  <div class="col-8">
+  <div class="col-8 leave-request-form-container">
     <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2
         id="jhi-leave-request-heading"
         data-cy="LeaveRequestCreateUpdateHeading"
+        class="form-title"
         jhiTranslate="leaveLinkApp.leaveRequest.home.createOrEditLabel"
       >
         Create or edit a Leave Request
       </h2>
 
       <div>
-        <jhi-alert-error></jhi-alert-error>
+        <jhi-alert-error class="alert-style"></jhi-alert-error>
 
         @if (editForm.controls.id.value !== null) {
           <div class="mb-3">
             <label class="form-label" for="field_id" jhiTranslate="leaveLinkApp.leaveRequest.id">ID</label>
-            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+            <input
+              type="number"
+              class="form-control form-field"
+              name="id"
+              id="field_id"
+              data-cy="id"
+              formControlName="id"
+              [readonly]="true"
+            />
           </div>
         }
 
         <div class="mb-3">
           <label class="form-label" for="field_title" jhiTranslate="leaveLinkApp.leaveRequest.title">Title</label>
-          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
+          <input type="text" class="form-control form-field" name="title" id="field_title" data-cy="title" formControlName="title" />
           @if (editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)) {
             <div>
               @if (editForm.get('title')?.errors?.required) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+                <small class="form-text text-danger error-message" jhiTranslate="entity.validation.required">This field is required.</small>
               }
             </div>
           }
@@ -35,7 +44,7 @@
           <label class="form-label" for="field_description" jhiTranslate="leaveLinkApp.leaveRequest.description">Description</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control form-field"
             name="description"
             id="field_description"
             data-cy="description"
@@ -50,7 +59,7 @@
               id="field_fromDate"
               data-cy="fromDate"
               type="text"
-              class="form-control"
+              class="form-control form-field"
               name="fromDate"
               ngbDatepicker
               #fromDateDp="ngbDatepicker"
@@ -61,7 +70,12 @@
           @if (editForm.get('fromDate')!.invalid && (editForm.get('fromDate')!.dirty || editForm.get('fromDate')!.touched)) {
             <div>
               @if (editForm.get('fromDate')?.errors?.required) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+                <small class="form-text text-danger error-message" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('fromDate')?.errors?.fromDateNotBeforeToday) {
+                <small class="form-text text-danger error-message" jhiTranslate="leaveLinkApp.leaveRequest.error.fromDateNotBeforeToday"
+                  >From Date cannot be before today.</small
+                >
               }
             </div>
           }
@@ -74,7 +88,7 @@
               id="field_toDate"
               data-cy="toDate"
               type="text"
-              class="form-control"
+              class="form-control form-field"
               name="toDate"
               ngbDatepicker
               #toDateDp="ngbDatepicker"
@@ -85,15 +99,21 @@
           @if (editForm.get('toDate')!.invalid && (editForm.get('toDate')!.dirty || editForm.get('toDate')!.touched)) {
             <div>
               @if (editForm.get('toDate')?.errors?.required) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+                <small class="form-text text-danger error-message" jhiTranslate="entity.validation.required">This field is required.</small>
               }
             </div>
           }
         </div>
 
+        @if (editForm.errors?.fromDateBeforeToDate && (editForm.touched || editForm.dirty)) {
+          <div class="alert alert-danger">
+            <small class="form-text text-danger">From Date must be before To Date.</small>
+          </div>
+        }
+
         <div class="mb-3">
           <label class="form-label" for="field_status" jhiTranslate="leaveLinkApp.leaveRequest.status">Status</label>
-          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+          <select class="form-control form-field" name="status" formControlName="status" id="field_status" data-cy="status">
             <ng-container *ngIf="isAdmin; else nonAdminStatus">
               <option [ngValue]="null">{{ 'leaveLinkApp.LeaveStatus.null' | translate }}</option>
               <option *ngFor="let leaveStatus of leaveStatusValues" [value]="leaveStatus">
@@ -110,13 +130,13 @@
 
           <div *ngIf="editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)">
             <div *ngIf="editForm.get('status')?.errors?.required">
-              <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              <small class="form-text text-danger error-message" jhiTranslate="entity.validation.required">This field is required.</small>
             </div>
           </div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="field_department" jhiTranslate="leaveLinkApp.leaveRequest.department">Department</label>
-          <select class="form-control" name="department" formControlName="department" id="field_department" data-cy="department">
+          <select class="form-control form-field" name="department" formControlName="department" id="field_department" data-cy="department">
             <option [ngValue]="null">{{ 'leaveLinkApp.Department.null' | translate }}</option>
             @for (department of departmentValues; track $index) {
               <option [value]="department">{{ 'leaveLinkApp.Department.' + department | translate }}</option>
@@ -125,7 +145,7 @@
           @if (editForm.get('department')!.invalid && (editForm.get('department')!.dirty || editForm.get('department')!.touched)) {
             <div>
               @if (editForm.get('department')?.errors?.required) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+                <small class="form-text text-danger error-message" jhiTranslate="entity.validation.required">This field is required.</small>
               }
             </div>
           }
@@ -138,7 +158,7 @@
               id="field_changedAt"
               data-cy="changedAt"
               type="datetime-local"
-              class="form-control"
+              class="form-control form-field"
               name="changedAt"
               formControlName="changedAt"
               placeholder="YYYY-MM-DD HH:mm"
@@ -147,10 +167,10 @@
           @if (editForm.get('changedAt')!.invalid && (editForm.get('changedAt')!.dirty || editForm.get('changedAt')!.touched)) {
             <div>
               @if (editForm.get('changedAt')?.errors?.required) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+                <small class="form-text text-danger error-message" jhiTranslate="entity.validation.required">This field is required.</small>
               }
               <small
-                class="form-text text-danger"
+                class="form-text text-danger error-message"
                 [hidden]="!editForm.get('changedAt')?.errors?.datetimelocal"
                 jhiTranslate="entity.validation.datetimelocal"
                 >This field should be a date and time.</small
@@ -161,14 +181,27 @@
 
         <div class="mb-3">
           <label class="form-label" for="field_employee" jhiTranslate="leaveLinkApp.leaveRequest.employee">Employee</label>
-          <select class="form-control" id="field_employee" data-cy="employee" name="employee" formControlName="employee" [disabled]="true">
+          <select
+            class="form-control form-field"
+            id="field_employee"
+            data-cy="employee"
+            name="employee"
+            formControlName="employee"
+            [disabled]="true"
+          >
             <option [ngValue]="currentUser">{{ currentUser?.login }}</option>
           </select>
         </div>
       </div>
 
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <button
+          type="button"
+          id="cancel-save"
+          data-cy="entityCreateCancelButton"
+          class="btn btn-secondary btn-style me-2"
+          (click)="previousState()"
+        >
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
@@ -177,7 +210,7 @@
           id="save-entity"
           data-cy="entityCreateSaveButton"
           [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
+          class="btn btn-primary btn-style"
         >
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>

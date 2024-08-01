@@ -1,38 +1,34 @@
-<div>
-  <h2 id="page-heading" data-cy="LeaveRequestHeading">
+<div class="leave-request-container">
+  <h2 id="page-heading" data-cy="LeaveRequestHeading" class="page-heading">
     <span jhiTranslate="leaveLinkApp.leaveRequest.home.title">Leave Requests</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+      <button class="btn btn-secondary me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
         <span jhiTranslate="leaveLinkApp.leaveRequest.home.refreshListLabel">Refresh list</span>
       </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-leave-request"
-        [routerLink]="['/leave-request/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="leaveLinkApp.leaveRequest.home.createLabel">Create a new Leave Request</span>
-      </button>
+      <ng-container *jhiHasAnyAuthority="'ROLE_USER'">
+        <button id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-primary" [routerLink]="['/leave-request/new']">
+          <fa-icon icon="plus"></fa-icon>
+          <span jhiTranslate="leaveLinkApp.leaveRequest.home.createLabel">Create a new Leave Request</span>
+        </button>
+      </ng-container>
     </div>
   </h2>
 
-  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert-error class="alert-style"></jhi-alert-error>
 
-  <jhi-alert></jhi-alert>
+  <jhi-alert class="alert-style"></jhi-alert>
 
   @if (leaveRequests?.length === 0) {
-    <div class="alert alert-warning" id="no-result">
+    <div class="alert alert-warning alert-style" id="no-result">
       <span jhiTranslate="leaveLinkApp.leaveRequest.home.notFound">No Leave Requests found</span>
     </div>
   }
 
-  @if (leaveRequests && leaveRequests.length > 0) {
-    <div class="table-responsive table-entities" id="entities">
-      <table class="table table-striped" aria-describedby="page-heading">
+  @if (requestedLeaveRequests.length > 0) {
+    <div class="table-responsive table-entities table-style" id="requested-entities">
+      <table class="table table-striped" aria-describedby="requested-page-heading">
         <thead>
           <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
             <th scope="col" jhiSortBy="id">
@@ -91,17 +87,19 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="employee.login">
-              <div class="d-flex">
-                <span jhiTranslate="leaveLinkApp.leaveRequest.employee">Employee</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col"></th>
+            <ng-container *jhiHasAnyAuthority="'ROLE_ADMIN'">
+              <th scope="col" jhiSortBy="employee.login">
+                <div class="d-flex">
+                  <span jhiTranslate="leaveLinkApp.leaveRequest.employee">Employee</span>
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                </div>
+              </th>
+            </ng-container>
           </tr>
         </thead>
         <tbody>
-          @for (leaveRequest of leaveRequests; track trackId) {
+          @for (leaveRequest of requestedLeaveRequests; track trackId) {
+            <tr data-cy="entityTable"></tr>
             <tr data-cy="entityTable">
               <td>
                 <a [routerLink]="['/leave-request', leaveRequest.id, 'view']">{{ leaveRequest.id }}</a>
@@ -121,9 +119,11 @@
                 }}
               </td>
               <td>{{ leaveRequest.changedAt | formatMediumDatetime }}</td>
-              <td>
-                {{ leaveRequest.employee?.login }}
-              </td>
+              <ng-container *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                <td>
+                  {{ leaveRequest.employee?.login }}
+                </td>
+              </ng-container>
               <td class="text-end">
                 <div class="btn-group">
                   <a [routerLink]="['/leave-request', leaveRequest.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
@@ -135,11 +135,12 @@
                     <fa-icon icon="pencil-alt"></fa-icon>
                     <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                   </a>
-
-                  <button type="submit" (click)="delete(leaveRequest)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                    <fa-icon icon="times"></fa-icon>
-                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                  </button>
+                  <ng-container *jhiHasAnyAuthority="'ROLE_USER'">
+                    <button type="submit" (click)="delete(leaveRequest)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                      <fa-icon icon="times"></fa-icon>
+                      <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                    </button>
+                  </ng-container>
                 </div>
               </td>
             </tr>
@@ -147,7 +148,144 @@
         </tbody>
       </table>
     </div>
+  } @else {
+    <div class="alert alert-warning alert-style" id="no-requested-result">
+      <span jhiTranslate="leaveLinkApp.leaveRequest.home.noRequestedFound">No Requested Leave Requests found</span>
+    </div>
   }
+
+  <hr class="section-divider" />
+
+  <h3 class="processed-heading">Processed Leave Requests</h3>
+  @if (processedLeaveRequests.length > 0) {
+    <div class="table-responsive table-entities table-style" id="processed-entities">
+      <table class="table table-striped" aria-describedby="processed-page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="title">
+              <div class="d-flex">
+                <span jhiTranslate="leaveLinkApp.leaveRequest.title">Title</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="description">
+              <div class="d-flex">
+                <span jhiTranslate="leaveLinkApp.leaveRequest.description">Description</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="fromDate">
+              <div class="d-flex">
+                <span jhiTranslate="leaveLinkApp.leaveRequest.fromDate">From Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="toDate">
+              <div class="d-flex">
+                <span jhiTranslate="leaveLinkApp.leaveRequest.toDate">To Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="status">
+              <div class="d-flex">
+                <span jhiTranslate="leaveLinkApp.leaveRequest.status">Status</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="department">
+              <div class="d-flex">
+                <span jhiTranslate="leaveLinkApp.leaveRequest.department">Department</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="changedAt">
+              <div class="d-flex">
+                <span jhiTranslate="leaveLinkApp.leaveRequest.changedAt">Changed At</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <ng-container *jhiHasAnyAuthority="'ROLE_ADMIN'">
+              <th scope="col" jhiSortBy="employee.login">
+                <div class="d-flex">
+                  <span jhiTranslate="leaveLinkApp.leaveRequest.employee">Employee</span>
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                </div>
+              </th>
+            </ng-container>
+          </tr>
+        </thead>
+        <tbody>
+          @for (leaveRequest of processedLeaveRequests; track trackId) {
+            <tr
+              data-cy="entityTable"
+              [ngClass]="{
+                'shadow-approved': leaveRequest.status === 'APPROVED',
+                'shadow-rejected': leaveRequest.status === 'REJECTED',
+              }"
+            >
+              <td>
+                <a [routerLink]="['/leave-request', leaveRequest.id, 'view']">{{ leaveRequest.id }}</a>
+              </td>
+              <td>{{ leaveRequest.title }}</td>
+              <td>{{ leaveRequest.description }}</td>
+              <td>{{ leaveRequest.fromDate | formatMediumDate }}</td>
+              <td>{{ leaveRequest.toDate | formatMediumDate }}</td>
+              <td [jhiTranslate]="'leaveLinkApp.LeaveStatus.' + (leaveRequest.status ?? 'null')">
+                {{ { null: '', REQUESTED: 'REQUESTED', REJECTED: 'REJECTED', APPROVED: 'APPROVED' }[leaveRequest.status ?? 'null'] }}
+              </td>
+              <td [jhiTranslate]="'leaveLinkApp.Department.' + (leaveRequest.department ?? 'null')">
+                {{
+                  { null: '', IT: 'IT', RH: 'RH', FINANCE: 'FINANCE', MARKETING: 'MARKETING', SALES: 'SALES' }[
+                    leaveRequest.department ?? 'null'
+                  ]
+                }}
+              </td>
+              <td>{{ leaveRequest.changedAt | formatMediumDatetime }}</td>
+              <ng-container *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                <td>
+                  {{ leaveRequest.employee?.login }}
+                </td>
+              </ng-container>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/leave-request', leaveRequest.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <ng-container *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                    <a [routerLink]="['/leave-request', leaveRequest.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                      <fa-icon icon="pencil-alt"></fa-icon>
+                      <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                    </a>
+                  </ng-container>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <div class="alert alert-warning alert-style" id="no-processed-result">
+      <span jhiTranslate="leaveLinkApp.leaveRequest.home.noProcessedFound">No Processed Leave Requests found</span>
+    </div>
+  }
+
   @if (leaveRequests && leaveRequests.length > 0) {
     <div>
       <div class="d-flex justify-content-center">

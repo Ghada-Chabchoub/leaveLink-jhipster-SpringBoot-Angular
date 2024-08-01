@@ -9,6 +9,7 @@ import { Login } from './login.model';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
+  authenticationError = false;
   private accountService = inject(AccountService);
   private authServerProvider = inject(AuthServerProvider);
 

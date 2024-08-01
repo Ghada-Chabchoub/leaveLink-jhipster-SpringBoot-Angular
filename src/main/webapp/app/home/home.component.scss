@@ -6,7 +6,6 @@ Main page styles
   display: inline-block;
   width: 347px;
   height: 497px;
-  background: url('../../content/images/jhipster_family_member_3.svg') no-repeat center top;
   background-size: contain;
 }
 
@@ -17,7 +16,6 @@ Main page styles
   only screen and (min-resolution: 192dpi),
   only screen and (min-resolution: 2dppx) {
   .hipster {
-    background: url('../../content/images/jhipster_family_member_3.svg') no-repeat center top;
     background-size: contain;
   }
 }
@@ -27,4 +25,18 @@ Main page styles
 
 .alert.hidden {
   opacity: 0;
+}
+.welcome-text {
+  font-size: 2.5em; /* Augmente la taille de la police */
+  color: #140e0b; /* Change la couleur du texte */
+  font-weight: bold; /* Rend le texte en gras */
+  text-align: center; /* Centre le texte */
+  margin-top: 20px; /* Ajoute une marge supérieure */
+}
+.welcome-span {
+  font-size: 1em; /* Augmente la taille de la police */
+  color: #fb742c; /* Change la couleur du texte */
+  font-weight: bold; /* Rend le texte en gras */
+  text-align: center; /* Centre le texte */
+  margin-top: 20px; /* Ajoute une marge supérieure */
 }

@@ -1,16 +1,18 @@
 <div class="d-flex justify-content-center">
-  <div class="col-8">
+  <div class="col-8 leave-request-details-container">
     @if (leaveRequest()) {
       <div>
-        <h2 data-cy="leaveRequestDetailsHeading"><span jhiTranslate="leaveLinkApp.leaveRequest.detail.title">Leave Request</span></h2>
+        <h2 class="details-title" data-cy="leaveRequestDetailsHeading">
+          <span jhiTranslate="leaveLinkApp.leaveRequest.detail.title">Leave Request</span>
+        </h2>
 
         <hr />
 
-        <jhi-alert-error></jhi-alert-error>
+        <jhi-alert-error class="alert-style"></jhi-alert-error>
 
-        <jhi-alert></jhi-alert>
+        <jhi-alert class="alert-style"></jhi-alert>
 
-        <dl class="row-md jh-entity-details">
+        <dl class="row-md jh-entity-details details-list">
           <dt><span jhiTranslate="global.field.id">ID</span></dt>
           <dd>
             <span>{{ leaveRequest()!.id }}</span>
@@ -55,13 +57,13 @@
           </dd>
         </dl>
 
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <button type="submit" (click)="previousState()" class="btn btn-secondary btn-style me-2" data-cy="entityDetailsBackButton">
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
         </button>
 
-        <button type="button" [routerLink]="['/leave-request', leaveRequest()!.id, 'edit']" class="btn btn-primary">
+        <!--  <button type="button" [routerLink]="['/leave-request', leaveRequest()!.id, 'edit']" class="btn btn-primary btn-style">
           <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-        </button>
+        </button> -->
       </div>
     }
   </div>

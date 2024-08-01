@@ -1,33 +1,36 @@
 <div class="d-flex justify-content-center">
-  <div class="col-8">
+  <div class="col-8 user-form-container">
     <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="myUserLabel" jhiTranslate="userManagement.home.createOrEditLabel">Create or edit a user</h2>
+      <h2 id="myUserLabel" class="form-title" jhiTranslate="userManagement.home.createOrEditLabel">Create or Edit a User</h2>
 
-      <jhi-alert-error></jhi-alert-error>
+      <jhi-alert-error class="alert-style"></jhi-alert-error>
 
       <div class="mb-3" [hidden]="!editForm.value.id">
         <label class="form-label" for="field_id" jhiTranslate="global.field.id">ID</label>
-        <input type="text" id="field_id" class="form-control" name="id" formControlName="id" readonly />
+        <input type="text" id="field_id" class="form-control form-field" name="id" formControlName="id" readonly />
       </div>
 
       <div class="mb-3">
         <label class="form-label" for="field_login" jhiTranslate="userManagement.login">Login</label>
-        <input type="text" id="field_login" class="form-control" name="login" formControlName="login" />
+        <input type="text" id="field_login" class="form-control form-field" name="login" formControlName="login" />
 
         @if (editForm.get('login')!.invalid && (editForm.get('login')!.dirty || editForm.get('login')!.touched)) {
           <div>
             @if (editForm.get('login')?.errors?.required) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              <small class="form-text text-danger error-message" jhiTranslate="entity.validation.required">This field is required.</small>
             }
 
             @if (editForm.get('login')?.errors?.maxlength) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '50' }"
+              <small
+                class="form-text text-danger error-message"
+                jhiTranslate="entity.validation.maxlength"
+                [translateValues]="{ max: '50' }"
                 >This field cannot be longer than 50 characters.</small
               >
             }
 
             @if (editForm.get('login')?.errors?.pattern) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.patternLogin"
+              <small class="form-text text-danger error-message" jhiTranslate="entity.validation.patternLogin"
                 >This field can only contain letters, digits and e-mail addresses.</small
               >
             }
@@ -37,12 +40,15 @@
 
       <div class="mb-3">
         <label class="form-label" for="field_firstName" jhiTranslate="userManagement.firstName">First name</label>
-        <input type="text" id="field_firstName" class="form-control" name="firstName" formControlName="firstName" />
+        <input type="text" id="field_firstName" class="form-control form-field" name="firstName" formControlName="firstName" />
 
         @if (editForm.get('firstName')!.invalid && (editForm.get('firstName')!.dirty || editForm.get('firstName')!.touched)) {
           <div>
             @if (editForm.get('firstName')?.errors?.maxlength) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '50' }"
+              <small
+                class="form-text text-danger error-message"
+                jhiTranslate="entity.validation.maxlength"
+                [translateValues]="{ max: '50' }"
                 >This field cannot be longer than 50 characters.</small
               >
             }
@@ -52,12 +58,15 @@
 
       <div class="mb-3">
         <label class="form-label" for="field_lastName" jhiTranslate="userManagement.lastName">Last name</label>
-        <input type="text" id="field_lastName" class="form-control" name="lastName" formControlName="lastName" />
+        <input type="text" id="field_lastName" class="form-control form-field" name="lastName" formControlName="lastName" />
 
         @if (editForm.get('lastName')!.invalid && (editForm.get('lastName')!.dirty || editForm.get('lastName')!.touched)) {
           <div>
             @if (editForm.get('lastName')?.errors?.maxlength) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '50' }"
+              <small
+                class="form-text text-danger error-message"
+                jhiTranslate="entity.validation.maxlength"
+                [translateValues]="{ max: '50' }"
                 >This field cannot be longer than 50 characters.</small
               >
             }
@@ -67,28 +76,33 @@
 
       <div class="mb-3">
         <label class="form-label" for="field_email" jhiTranslate="userManagement.email">Email</label>
-        <input type="email" id="field_email" class="form-control" name="email" formControlName="email" />
+        <input type="email" id="field_email" class="form-control form-field" name="email" formControlName="email" />
 
         @if (editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)) {
           <div>
             @if (editForm.get('email')?.errors?.required) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              <small class="form-text text-danger error-message" jhiTranslate="entity.validation.required">This field is required.</small>
             }
 
             @if (editForm.get('email')?.errors?.maxlength) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+              <small
+                class="form-text text-danger error-message"
+                jhiTranslate="entity.validation.maxlength"
+                [translateValues]="{ max: '100' }"
                 >This field cannot be longer than 100 characters.</small
               >
             }
 
             @if (editForm.get('email')?.errors?.minlength) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: '5' }"
+              <small class="form-text text-danger error-message" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: '5' }"
                 >This field is required to be at least 5 characters.</small
               >
             }
 
             @if (editForm.get('email')?.errors?.email) {
-              <small class="form-text text-danger" jhiTranslate="global.messages.validate.email.invalid">Your email is invalid.</small>
+              <small class="form-text text-danger error-message" jhiTranslate="global.messages.validate.email.invalid"
+                >Your email is invalid.</small
+              >
             }
           </div>
         }
@@ -111,7 +125,7 @@
       @if (languages && languages.length > 0) {
         <div class="mb-3">
           <label class="form-label" for="langKey" jhiTranslate="userManagement.langKey">Language</label>
-          <select class="form-control" id="langKey" name="langKey" formControlName="langKey">
+          <select class="form-control form-field" id="langKey" name="langKey" formControlName="langKey">
             @for (language of languages; track $index) {
               <option [value]="language">{{ language | findLanguageFromKey }}</option>
             }
@@ -121,17 +135,17 @@
 
       <div class="mb-3">
         <label class="form-label" for="field_authority" jhiTranslate="userManagement.profiles">Profiles</label>
-        <select class="form-control" id="field_authority" multiple name="authority" formControlName="authorities">
+        <select class="form-control form-field" id="field_authority" multiple name="authority" formControlName="authorities">
           @for (authority of authorities(); track $index) {
             <option [value]="authority">{{ authority }}</option>
           }
         </select>
       </div>
-      <button type="button" class="btn btn-secondary" (click)="previousState()">
+      <button type="button" class="btn btn-secondary btn-style me-2" (click)="previousState()">
         <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
       </button>
 
-      <button type="submit" [disabled]="editForm.invalid || isSaving()" class="btn btn-primary">
+      <button type="submit" [disabled]="editForm.invalid || isSaving()" class="btn btn-primary btn-style">
         <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
       </button>
     </form>

@@ -7,6 +7,8 @@ import { ILeaveRequest, NewLeaveRequest } from '../leave-request.model';
 import { AccountService } from '../../../core/auth/account.service';
 import { HttpClient } from '@angular/common/http';
 import { IUser } from 'app/entities/user/user.model';
+import { fromDateBeforeToDateValidator } from '../custom-validators';
+// Import the custom validator
 
 /**
  * A partial Type with required key is used as form input.
@@ -60,7 +62,7 @@ export class LeaveRequestFormService {
     });
     const isAdmin = this.accountService.hasAnyAuthority('ROLE_ADMIN');
 
-    return new FormGroup<LeaveRequestFormGroupContent>({
+    const formGroup = new FormGroup<LeaveRequestFormGroupContent>({
       id: new FormControl(
         { value: leaveRequestRawValue.id, disabled: true },
         {
@@ -94,6 +96,11 @@ export class LeaveRequestFormService {
         validators: [Validators.required],
       }),
     });
+
+    // Add the custom validator to the form group
+    formGroup.setValidators(fromDateBeforeToDateValidator());
+
+    return formGroup;
   }
 
   getLeaveRequest(form: LeaveRequestFormGroup): ILeaveRequest | NewLeaveRequest {

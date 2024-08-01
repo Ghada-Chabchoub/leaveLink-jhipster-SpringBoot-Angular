@@ -360,3 +360,246 @@ jhi-footer {
   height: 40px; /* Ajustez la hauteur selon votre design */
   flex-shrink: 0;
 }
+/*leave req style */
+.leave-request-container {
+  padding: 20px;
+}
+
+.page-heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.btn-style {
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.alert-style {
+  margin-top: 20px;
+}
+
+.table-style {
+  margin-top: 20px;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table-style th,
+.table-style td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table-style tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table-style tr:hover {
+  background-color: #ddd;
+}
+
+.processed-heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+tr.shadow-approved {
+  box-shadow:
+    0 -3px 5px rgba(141, 240, 141, 0.913),
+    0 2px 5px rgba(0, 255, 0, 0.3) !important;
+}
+
+tr.shadow-rejected {
+  box-shadow:
+    0 -3px 5px rgba(242, 76, 76, 0.3),
+    0 2px 4px rgba(255, 0, 0, 0.3) !important;
+}
+.section-divider {
+  border: 0;
+  height: 1px;
+  background: #333;
+  background-image: linear-gradient(to right, #ccc, #333, #ccc);
+  margin: 40px 0;
+}
+
+/* users mang style */
+.user-management-container {
+  padding: 20px;
+}
+
+.page-heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.btn-style {
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.alert-style {
+  margin-top: 20px;
+}
+
+.table-style {
+  margin-top: 20px;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table-style th,
+.table-style td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table-style tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table-style tr:hover {
+  background-color: #ddd;
+}
+/* add user style */
+.user-form-container {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.form-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.form-field {
+  border-radius: 5px;
+}
+
+.error-message {
+  color: #dc3545;
+}
+
+.btn-style {
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.alert-style {
+  margin-bottom: 20px;
+}
+/* user details*/
+.user-details-container {
+  padding: 20px;
+  border: 1px solid #fe7b2a;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.details-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.details-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.details-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.details-item dt {
+  font-weight: bold;
+  margin-right: 10px;
+  min-width: 150px; /* Ajustez cette valeur selon vos besoins */
+}
+
+.details-item dd {
+  margin-left: 0;
+}
+
+.details-badge {
+  margin-left: 5px;
+}
+
+.btn-style {
+  margin-top: 20px;
+  border-radius: 5px;
+}
+/* leave req details**/
+.leave-request-details-container {
+  padding: 20px;
+  border: 1px solid #fe7b2a;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.details-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.details-list {
+  margin-bottom: 20px;
+}
+
+.details-list dt {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.details-list dd {
+  margin-bottom: 15px;
+}
+
+.btn-style {
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.alert-style {
+  margin-bottom: 20px;
+}
+/* add leave req style */
+.leave-request-form-container {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.form-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.form-field {
+  border-radius: 5px;
+}
+
+.error-message {
+  color: #dc3545;
+}
+
+.btn-style {
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.alert-style {
+  margin-bottom: 20px;
+}

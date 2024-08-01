@@ -50,6 +50,9 @@ export class LeaveRequestComponent implements OnInit {
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
 
+  requestedLeaveRequests: ILeaveRequest[] = [];
+  processedLeaveRequests: ILeaveRequest[] = [];
+
   trackId = (_index: number, item: ILeaveRequest): number => this.leaveRequestService.getLeaveRequestIdentifier(item);
 
   ngOnInit(): void {
@@ -101,9 +104,9 @@ export class LeaveRequestComponent implements OnInit {
     this.leaveRequests = dataFromBody;
   }
 
-  protected fillComponentAttributesFromResponseBody(data: ILeaveRequest[] | null): ILeaveRequest[] {
+  /*protected fillComponentAttributesFromResponseBody(data: ILeaveRequest[] | null): ILeaveRequest[] {
     return data ?? [];
-  }
+  }*/
 
   protected fillComponentAttributesFromResponseHeader(headers: HttpHeaders): void {
     this.totalItems = Number(headers.get(TOTAL_COUNT_RESPONSE_HEADER));
@@ -136,5 +139,11 @@ export class LeaveRequestComponent implements OnInit {
         queryParams: queryParamsObj,
       });
     });
+  }
+  protected fillComponentAttributesFromResponseBody(data: ILeaveRequest[] | null): ILeaveRequest[] {
+    const leaveRequests = data ?? [];
+    this.requestedLeaveRequests = leaveRequests.filter(lr => lr.status === 'REQUESTED');
+    this.processedLeaveRequests = leaveRequests.filter(lr => lr.status === 'APPROVED' || lr.status === 'REJECTED');
+    return leaveRequests;
   }
 }
